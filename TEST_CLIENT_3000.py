@@ -53,12 +53,12 @@ class Window(QMainWindow):
     def start_draw(self, log_list):
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(lambda: self.draw(log_list))
-        self.timer.start(100)
+        self.timer.start(10)
 
     """Функция отрисовки меток"""
     def draw(self, log_list):
         if len(log_list) != 0:
-            message = log_list.pop()
+            message = log_list.pop(0)
             check_tag_flag = False
             for tag in self.tags:
                 if tag.name == message["data"]["ID"]:
@@ -100,6 +100,7 @@ async def client_handler(server_ip, server_port, log_list):
 
 async def ws_config(log_list):
     server_ip = "127.0.0.1"
+    server_ip1 = "10.3.168.117"
     server_port = "8000"
     loop = asyncio.get_event_loop()
     loop.run_until_complete(await client_handler(server_ip, server_port, log_list))
